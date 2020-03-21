@@ -1,29 +1,34 @@
 package com.myboot.community.dto;
 
+/**
+ * alt + shift + s 然后按 r键
+ * @author ceshi
+ *
+ */
 public class AccessTokenDTO {
-	private String ClientId;
-	private String ClientSecret;
-	private String RedirectUri;
+	private String client_id;
+	private String client_secret;
+	private String redirect_uri;
 	private String code;
 	private String state;
 	
-	public String getClientId() {
-		return ClientId;
+	public String getClient_id() {
+		return client_id;
 	}
-	public void setClientId(String clientId) {
-		ClientId = clientId;
+	public void setClient_id(String client_id) {
+		this.client_id = client_id;
 	}
-	public String getClientSecret() {
-		return ClientSecret;
+	public String getClient_secret() {
+		return client_secret;
 	}
-	public void setClientSecret(String clientSecret) {
-		ClientSecret = clientSecret;
+	public void setClient_secret(String client_secret) {
+		this.client_secret = client_secret;
 	}
-	public String getRedirectUri() {
-		return RedirectUri;
+	public String getRedirect_uri() {
+		return redirect_uri;
 	}
-	public void setRedirectUri(String redirectUri) {
-		RedirectUri = redirectUri;
+	public void setRedirect_uri(String redirect_uri) {
+		this.redirect_uri = redirect_uri;
 	}
 	public String getCode() {
 		return code;
@@ -37,5 +42,7 @@ public class AccessTokenDTO {
 	public void setState(String state) {
 		this.state = state;
 	}
+	
+	
 	
 }
