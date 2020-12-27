@@ -1,6 +1,8 @@
 package com.myboot.community.controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.Spring;
 
 import com.myboot.community.mapper.UserMapper;
@@ -35,9 +37,10 @@ public class AuthorizeController {
 	private UserMapper userMapper;
 
 	@GetMapping("/callback")
-	public String callback(@RequestParam(name="code") String code, 
-							@RequestParam(name="state") String state,
-							HttpServletRequest request) {
+	public String callback(@RequestParam(name="code") String code,
+						   @RequestParam(name="state") String state,
+						   HttpServletRequest request,
+						   HttpServletResponse response) {
 		
 		AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
 		accessTokenDTO.setClient_id(clientId);
@@ -49,14 +52,17 @@ public class AuthorizeController {
 		GithubUser githubUser = githubProvider.getUser(accessToken);
 		
 		if (githubUser != null) {
+			String token = UUID.randomUUID().toString();
+
 			User user = new User();
 			user.setName(githubUser.getName());
-			user.setToken(UUID.randomUUID().toString());
+			user.setToken(token);
 			user.setAccountNo(String.valueOf(githubUser.getIdLong()));
 			userMapper.insert(user);
 
 			// 写cookie 和session
-			request.getSession().setAttribute("user", githubUser);
+			response.addCookie(new Cookie("token", token));
+//			request.getSession().setAttribute("user", githubUser);
 			return "redirect:/";
 		}else {
 			return "redirect:/";
